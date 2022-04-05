@@ -1,16 +1,94 @@
-/*¸ø¶¨Ò»¿Ã¶þ²æÊ÷µÄ¹ãÒå±í±íÊ¾·¨£¬ÇëÊµÏÖ¶þ²æÊ÷µÄ½¨Á¢£¬²¢ÓÃµÝ¹é·½·¨Êä³ö¸Ã¶þ²æÊ÷µÄÖÐÐò±éÀúÐòÁÐ¡£
-ÀýÈçÑùÀý1£¨ÆäÖÐ£¬¡°#¡±²»Êä³ö£©£ºA(B(C,D(E(,G),F)))*/
+/*ç»™å®šä¸€æ£µäºŒå‰æ ‘çš„å¹¿ä¹‰è¡¨è¡¨ç¤ºæ³•ï¼Œè¯·å®žçŽ°äºŒå‰æ ‘çš„å»ºç«‹ï¼Œå¹¶ç”¨é€’å½’æ–¹æ³•è¾“å‡ºè¯¥äºŒå‰æ ‘çš„ä¸­åºéåŽ†åºåˆ—ã€‚
+ä¾‹å¦‚æ ·ä¾‹1ï¼ˆå…¶ä¸­ï¼Œâ€œ#â€ä¸è¾“å‡ºï¼‰ï¼šA(B(C,D(E(,G),F)))*/
 /*
-ÊäÈë
-¡¾ÊäÈëËµÃ÷¡¿
-¶þ²æÊ÷µÄ¹ãÒå±í±íÊ¾£¬ÀýÈç£º  A(B(C,D(E(,G),F)))
+è¾“å…¥
+ã€è¾“å…¥è¯´æ˜Žã€‘
+äºŒå‰æ ‘çš„å¹¿ä¹‰è¡¨è¡¨ç¤ºï¼Œä¾‹å¦‚ï¼š  A(B(C,D(E(,G),F)))
 
-Êä³ö
-¡¾Êä³öËµÃ÷¡¿
-µÝ¹é±éÀú¸Ã¶þ²æÊ÷µÃµ½µÄÖÐÐòÐòÁÐ£¬ÀýÈçÉÏÊö¶þ²æÊ÷µÄÖÐÐòÐòÁÐÎª£º
+è¾“å‡º
+ã€è¾“å‡ºè¯´æ˜Žã€‘
+é€’å½’éåŽ†è¯¥äºŒå‰æ ‘å¾—åˆ°çš„ä¸­åºåºåˆ—ï¼Œä¾‹å¦‚ä¸Šè¿°äºŒå‰æ ‘çš„ä¸­åºåºåˆ—ä¸ºï¼š
 C B E G D F A
-ÑùÀýÊäÈë Copy
+æ ·ä¾‹è¾“å…¥ Copy
 A(B(C,D(E(,G),F)))
-ÑùÀýÊä³ö Copy
+æ ·ä¾‹è¾“å‡º Copy
 C B E G D F A?
 */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h> 
+#define N 100000
+ 
+typedef char Element;
+typedef struct Node BTNode;
+typedef struct Node * BTree;
+ 
+struct Node{
+    Element data;
+    struct Node *lchild;
+    struct Node *rchild;
+};
+ 
+BTree NewNode(Element x) 
+{
+    BTree p=(BTree)malloc(sizeof(BTNode));
+    p->data=x;
+    p->lchild=NULL;
+    p->rchild=NULL;
+    return p;
+}
+ 
+BTree Create_BTree(char s[])   
+{
+    int i,k,top;
+    BTree path[N],p;
+    k=0;
+    top=-1;
+    for(i=0;s[i]!='\0';i++)
+    {
+        switch(s[i]) 
+        {
+          
+            case '(':
+                path[++top]=p;
+                k=1;
+                break;
+            case ',':
+                k=2;
+                break;
+            case ')':
+                top--;
+                break;
+        } 
+        if(isalpha(s[i])) 
+        {
+            p=NewNode(s[i]);
+            if(k==1)
+                path[top]->lchild=p;
+            else if(k==2)
+                path[top]->rchild=p;
+        }
+    } 
+    return path[0];
+}
+ 
+void In_Order(BTree root) 
+{    
+    if (root!=NULL)
+    {
+        In_Order(root->lchild);
+        printf("%c ",root->data);
+        In_Order(root->rchild);
+    }
+}
+ 
+int main()
+{
+    char s[N];
+    BTree root=NULL;
+    gets(s);
+    root=Create_BTree(s);
+    In_Order(root);
+    return 0;
+}
