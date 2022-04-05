@@ -1,16 +1,96 @@
 /*
-°´²ã´Î¸ø¶¨Ò»¿Ã¶þ²æÊ÷µÄÔªËØ£¬½¨Á¢¸Ã¶þ²æÊ÷¡£ÎªÁË·½±ãÑéÖ¤£¬ÇëÀûÓÃµÝ¹é·½·¨Êä³öËù½¨¶þ²æÊ÷µÄÏÈÐòÐòÁÐ¡£
-¸ø¶¨¶þ²æÊ÷ÐòÁÐÈçÏÂ(ÆäÖÐ#±íÊ¾Ò¶×Ó½Úµã£©£ºab#cd##ef#g####
-ÊäÈë
-°´ÕÕ¶þ²æÊ÷µÄ²ã´ÎÐòÁÐ£¬ÊäÈë×Ö·û´®£¬Ò¶×Ó½ÚµãÓÃ¡°#¡±±íÊ¾¡£
-ÀýÈçÊäÈëÑùÀý1£º
+æŒ‰å±‚æ¬¡ç»™å®šä¸€æ£µäºŒå‰æ ‘çš„å…ƒç´ ï¼Œå»ºç«‹è¯¥äºŒå‰æ ‘ã€‚ä¸ºäº†æ–¹ä¾¿éªŒè¯ï¼Œè¯·åˆ©ç”¨é€’å½’æ–¹æ³•è¾“å‡ºæ‰€å»ºäºŒå‰æ ‘çš„å…ˆåºåºåˆ—ã€‚
+ç»™å®šäºŒå‰æ ‘åºåˆ—å¦‚ä¸‹(å…¶ä¸­#è¡¨ç¤ºå¶å­èŠ‚ç‚¹ï¼‰ï¼šab#cd##ef#g####
+è¾“å…¥
+æŒ‰ç…§äºŒå‰æ ‘çš„å±‚æ¬¡åºåˆ—ï¼Œè¾“å…¥å­—ç¬¦ä¸²ï¼Œå¶å­èŠ‚ç‚¹ç”¨â€œ#â€è¡¨ç¤ºã€‚
+ä¾‹å¦‚è¾“å…¥æ ·ä¾‹1ï¼š
 ab#cd##ef#g####
-Êä³ö
-¶þ²æÊ÷µÄÏÈÐò±éÀúÐòÁÐ¡£
-ÀýÈçÕë¶ÔÑùÀý1µÄÊä³öÎª:
+è¾“å‡º
+äºŒå‰æ ‘çš„å…ˆåºéåŽ†åºåˆ—ã€‚
+ä¾‹å¦‚é’ˆå¯¹æ ·ä¾‹1çš„è¾“å‡ºä¸º:
 abc##de#g##f###
-ÑùÀýÊäÈë Copy
+æ ·ä¾‹è¾“å…¥ Copy
 ab#cd##ef#g####
-ÑùÀýÊä³ö Copy
+æ ·ä¾‹è¾“å‡º Copy
 abc##de#g##f###?
 */
+
+#include<stdio.h>
+#include<malloc.h>
+typedef struct BiTnode 
+{
+    char data;
+    struct BiTnode* lchild, * rchild;
+}BiTnode, * BiTree;
+ 
+BiTree creat() 
+{
+    char ch;
+    int front = 0, rear = 0;
+    BiTree BT, T;
+    BiTree queue[100];
+    scanf("%c", &ch);
+    if (ch != '#') 
+    {
+        BT = (BiTree)malloc(sizeof(BiTnode));
+        BT->data = ch;
+        BT->lchild = BT->rchild = NULL;
+        queue[rear++] = BT;
+    }
+    else
+    {
+        return NULL;
+    }
+    while (front != rear)
+    {
+        T = queue[front++];//ä»Žé˜Ÿåˆ—ä¸­å–å‡ºä¸€ä¸ªç»“ç‚¹
+        scanf("%c", &ch);//è¾“å…¥å·¦å­©å­çš„æ•°æ® 
+        if (ch == '#') 
+        {
+            T->lchild = NULL;
+        }
+        else
+        {
+            T->lchild = (BiTree)malloc(sizeof(BiTnode));
+            T->lchild->data = ch;
+            T->lchild->lchild = NULL;
+            T->lchild->rchild = NULL;
+            queue[rear++] = T->lchild;
+        }
+        scanf("%c", &ch);//è¾“å…¥å³å­©å­çš„æ•°æ® 
+        if (ch == '#') 
+        {
+            T->rchild = NULL;
+        }
+        else
+        {
+            T->rchild = (BiTree)malloc(sizeof(BiTnode));
+            T->rchild->data = ch;
+            T->rchild->lchild = NULL;
+            T->rchild->rchild = NULL;
+            queue[rear++] = T->rchild;
+        }
+    }
+    return BT;
+}
+void pre(BiTree T) 
+{
+    if (T) 
+    {
+        printf("%c", T->data);
+        pre(T->lchild);
+        pre(T->rchild);
+    }
+    else
+    {
+        printf("#");
+    }
+}
+ 
+int main() 
+{
+    BiTree T;
+    T = creat();
+    pre(T);
+    return 0;
+}
