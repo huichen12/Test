@@ -1,11 +1,12 @@
+//ã€æ•°æ®ç»“æ„ä¸ç®—æ³•ã€‘(week03-01) å›¾çš„é‚»æ¥çŸ©é˜µå­˜å‚¨
 #include <stdio.h>
 #include <stdlib.h>
 #define MAXSIZE 100
-typedef char VertexType; //¶¥µãÀàĞÍÓ¦ÓÉÓÃ»§¶¨Òå
-typedef int EdgeType; //±ßÉÏµÄÈ¨ÖµÀàĞÍÓ¦ÓÉÓÃ»§¶¨Òå
+typedef char VertexType; //é¡¶ç‚¹ç±»å‹åº”ç”±ç”¨æˆ·å®šä¹‰
+typedef int EdgeType; //è¾¹ä¸Šçš„æƒå€¼ç±»å‹åº”ç”±ç”¨æˆ·å®šä¹‰
 typedef struct graph {
-    VertexType vexs[MAXSIZE];//¶¥µã±í
-    EdgeType arc[MAXSIZE][MAXSIZE];//ÁÚ½Ó¾ØÕó
+    VertexType vexs[MAXSIZE];//é¡¶ç‚¹è¡¨
+    EdgeType arc[MAXSIZE][MAXSIZE];//é‚»æ¥çŸ©é˜µ
     int numNodes, numEdges;
 }Graph;
 void CreateGraph(Graph* graph);
@@ -13,7 +14,7 @@ int main()
 {
     Graph graph;
     CreateGraph(&graph);
-    //´òÓ¡ÁÚ½Ó¾ØÕó
+    //æ‰“å°é‚»æ¥çŸ©é˜µ
     int i, j;
     for (i = 0; i < graph.numNodes; ++i) {
         for (j = 0; j < graph.numNodes; ++j) {
@@ -25,37 +26,37 @@ int main()
 }
 void CreateGraph(Graph* graph) {
     int i, j, x;
-    //ÁÚ½Ó¾ØÕóÖÃ0(0±íÊ¾Ã»±ß£¬1±íÊ¾ÓĞ±ß)
+    //é‚»æ¥çŸ©é˜µç½®0(0è¡¨ç¤ºæ²¡è¾¹ï¼Œ1è¡¨ç¤ºæœ‰è¾¹)
     for (i = 0; i < graph->numNodes; ++i) {
         for (j = 0; j < graph->numNodes; ++j) {
             graph->arc[i][j] = 0;
         }
     }
-    //ÊäÈë¶¥µãÊı, ±ßÊı;
+    //è¾“å…¥é¡¶ç‚¹æ•°, è¾¹æ•°;
     scanf("%d %d", &graph->numNodes, &graph->numEdges);
-    getchar(); //Ïû³ı¿Õ°×·û
-    scanf("%d", &x);//0ÎªÎŞÏòÍ¼£¬1ÎªÓĞÏòÍ¼
+    getchar(); //æ¶ˆé™¤ç©ºç™½ç¬¦
+    scanf("%d", &x);//0ä¸ºæ— å‘å›¾ï¼Œ1ä¸ºæœ‰å‘å›¾
     for (i = 0; i < graph->numNodes; ++i) {
-        //ÊäÈë¶¥µã;
+        //è¾“å…¥é¡¶ç‚¹;
         scanf("%c", &graph->vexs[i]);
-        getchar();//Ïû³ı¿Õ°×·û
+        getchar();//æ¶ˆé™¤ç©ºç™½ç¬¦
     }
     int start, end;
     for (i = 0; i < graph->numEdges; ++i) {
-        //ÊäÈëÆğµã£¬ ÖÕµã
+        //è¾“å…¥èµ·ç‚¹ï¼Œ ç»ˆç‚¹
         scanf("%d %d", &start, &end);
-        getchar(); //Ïû³ı¿Õ°×·û
+        getchar(); //æ¶ˆé™¤ç©ºç™½ç¬¦
         int startIndex, endIndex;
-        for (j = 0; j < graph->numNodes; ++j) {//ÕÒµ½ÆğÊ¼µã,ÖÕµã
-            if (start == j) { //±éÀúÕÒµ½ÆğµãµÄÏÂ±ê
+        for (j = 0; j < graph->numNodes; ++j) {//æ‰¾åˆ°èµ·å§‹ç‚¹,ç»ˆç‚¹
+            if (start == j) { //éå†æ‰¾åˆ°èµ·ç‚¹çš„ä¸‹æ ‡
                 startIndex = j;
             }
-            if (end == j) { //±éÀúÕÒµ½ÖÕµãµÄÏÂ±ê
+            if (end == j) { //éå†æ‰¾åˆ°ç»ˆç‚¹çš„ä¸‹æ ‡
                 endIndex = j;
             }
         }
         graph->arc[startIndex][endIndex] = 1;
-        //Èç¹ûÊÇÎŞÏòÍ¼£¬ĞèÒªË«Ïò±£´æ
+        //å¦‚æœæ˜¯æ— å‘å›¾ï¼Œéœ€è¦åŒå‘ä¿å­˜
         if (x == 0) {
             graph->arc[endIndex][startIndex] = 1;
         }
