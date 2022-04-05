@@ -1,4 +1,4 @@
-
+//Primç®—æ³•ç”Ÿæˆæœ€å°ä»£ä»·ç”Ÿæˆæ ‘
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>
@@ -6,18 +6,18 @@
 #define INF 32767
 typedef char InfoType;
 
-//ÁÚ½Ó¾ØÕóÀàĞÍ
+//é‚»æ¥çŸ©é˜µç±»å‹
 typedef struct
 {
-	int no;  //¶¥µã±àºÅ
-	InfoType info;  //¶¥µãÆäËûĞÅÏ¢
-}VertexType; //¶¥µãÀàĞÍ
+	int no;  //é¡¶ç‚¹ç¼–å·
+	InfoType info;  //é¡¶ç‚¹å…¶ä»–ä¿¡æ¯
+}VertexType; //é¡¶ç‚¹ç±»å‹
 
 typedef struct
 {
-	int edges[MAXV][MAXV]; //ÁÚ½Ó¾ØÕóÊı×é
-	int n, c; //¶¥µãÊı£¬±ßÊı
-	VertexType vexs[MAXV]; //´æ·Å¶¥µãĞÅÏ¢
+	int edges[MAXV][MAXV]; //é‚»æ¥çŸ©é˜µæ•°ç»„
+	int n, c; //é¡¶ç‚¹æ•°ï¼Œè¾¹æ•°
+	VertexType vexs[MAXV]; //å­˜æ”¾é¡¶ç‚¹ä¿¡æ¯
 }MatGraph;
 
 
@@ -47,7 +47,7 @@ void printMat(MatGraph g)
 			}
 			else
 			{
-				printf("%4s", "¡Ş");
+				printf("%4s", "âˆ");
 			}
 		}
 		printf("\n");
@@ -72,7 +72,7 @@ void prim(MatGraph g, int v)
 			if (lowcost[j] != 0 && lowcost[j] < min)
 			{
 				min = lowcost[j];
-				k = j; //¼ÇÂ¼×î½ü¶¥µã±àºÅ
+				k = j; //è®°å½•æœ€è¿‘é¡¶ç‚¹ç¼–å·
 			}
 		}
 		totall = totall + min;
