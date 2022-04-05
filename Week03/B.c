@@ -1,63 +1,63 @@
-
+//å›¾çš„é‚»æ¥è¡¨å­˜å‚¨
 #include <stdio.h>
 #include <stdlib.h>
 #define VertexType char 
 #define VertexMax 20
  
-typedef struct ArcNode//±ß±í 
+typedef struct ArcNode//è¾¹è¡¨ 
 {
-    int adjvex;//´æ´¢µÄÊÇ¸Ã¶¥µãÔÚ¶¥µãÊı×é¼´AdjList[]ÖĞµÄÎ»ÖÃ 
+    int adjvex;//å­˜å‚¨çš„æ˜¯è¯¥é¡¶ç‚¹åœ¨é¡¶ç‚¹æ•°ç»„å³AdjList[]ä¸­çš„ä½ç½® 
     struct ArcNode* nextarc;
 }ArcNode;
  
-typedef struct VNode //µ¥¸ö¶¥µã 
+typedef struct VNode //å•ä¸ªé¡¶ç‚¹ 
 {
     char data;
     struct ArcNode* firstarc;
 }VNode;
  
-typedef struct //¶¥µã±í 
+typedef struct //é¡¶ç‚¹è¡¨ 
 {
-    VNode AdjList[VertexMax];//ÓÉ¶¥µã¹¹³ÉµÄ½á¹¹ÌåÊı×é 
-    int vexnum, arcnum; //¶¥µãÊıºÍ±ßÊı 
-    int kind; //¼ÇÂ¼Í¼µÄÀàĞÍ 
+    VNode AdjList[VertexMax];//ç”±é¡¶ç‚¹æ„æˆçš„ç»“æ„ä½“æ•°ç»„ 
+    int vexnum, arcnum; //é¡¶ç‚¹æ•°å’Œè¾¹æ•° 
+    int kind; //è®°å½•å›¾çš„ç±»å‹ 
 }ALGraph;
  
 void CreateDG(ALGraph* G)
 {
     int i, j;
     int flag;
-    //1.ÊäÈë¶¥µãÊıºÍ±ßÊı 
+    //1.è¾“å…¥é¡¶ç‚¹æ•°å’Œè¾¹æ•° 
     scanf("%d%d", &G->vexnum, &G->arcnum);
     scanf("%d", &flag);
     getchar();
-    //2.¶¥µã±íÊı¾İÓòÌîÖµ³õÊ¼»¯¶¥µã±íÖ¸ÕëÓò 
+    //2.é¡¶ç‚¹è¡¨æ•°æ®åŸŸå¡«å€¼åˆå§‹åŒ–é¡¶ç‚¹è¡¨æŒ‡é’ˆåŸŸ 
     for (i = 0; i < G->vexnum; i++)
     {
         scanf("%c", &G->AdjList[i].data);
         G->AdjList[i].firstarc = NULL;
         getchar();
     }
-    //3.ÊäÈë±ßĞÅÏ¢¹¹ÔìÁÚ½Ó±í 
+    //3.è¾“å…¥è¾¹ä¿¡æ¯æ„é€ é‚»æ¥è¡¨ 
     int v1, v2;
     ArcNode* p1, * p2;
     for (i = 0; i < G->arcnum; i++)
-    {   //ÊäÈë±ßĞÅÏ¢£¬²¢È·¶¨v1ºÍv2ÔÚGÖĞµÄÎ»ÖÃ£¬¼´¶¥µãÔÚAdjList[]Êı×éÖĞµÄÎ»ÖÃ£¨ÏÂ±ê£©  
+    {   //è¾“å…¥è¾¹ä¿¡æ¯ï¼Œå¹¶ç¡®å®šv1å’Œv2åœ¨Gä¸­çš„ä½ç½®ï¼Œå³é¡¶ç‚¹åœ¨AdjList[]æ•°ç»„ä¸­çš„ä½ç½®ï¼ˆä¸‹æ ‡ï¼‰  
         scanf("%d%d", &v1, &v2);
         if (flag == 0) {
             p1 = (ArcNode*)malloc(sizeof(ArcNode));
-            p1->adjvex = v2;//ÌîÉÏ×ø±ê 
-            p1->nextarc = G->AdjList[v1].firstarc;//¸ÄÁ´£¨Í·²å·¨£©  
+            p1->adjvex = v2;//å¡«ä¸Šåæ ‡ 
+            p1->nextarc = G->AdjList[v1].firstarc;//æ”¹é“¾ï¼ˆå¤´æ’æ³•ï¼‰  
             G->AdjList[v1].firstarc = p1;
-            p2 = (ArcNode*)malloc(sizeof(ArcNode));//ÎŞÏòÍ¼µÄ¶Ô³Æ 
+            p2 = (ArcNode*)malloc(sizeof(ArcNode));//æ— å‘å›¾çš„å¯¹ç§° 
             p2->adjvex = v1;
             p2->nextarc = G->AdjList[v2].firstarc;
             G->AdjList[v2].firstarc = p2;
         }
         else {
             p1 = (ArcNode*)malloc(sizeof(ArcNode));
-            p1->adjvex = v2;//ÌîÉÏ×ø±ê 
-            p1->nextarc = G->AdjList[v1].firstarc;//¸ÄÁ´£¨Í·²å·¨£©  
+            p1->adjvex = v2;//å¡«ä¸Šåæ ‡ 
+            p1->nextarc = G->AdjList[v1].firstarc;//æ”¹é“¾ï¼ˆå¤´æ’æ³•ï¼‰  
             G->AdjList[v1].firstarc = p1;
         }
     }
